@@ -14,19 +14,19 @@ db.createCollection("client_orders", {
       properties: {
         address: {
           bsonType: 'string',
-          description: 'Fieldname1 must be a string'
+          description: 'The address'
         },
         telephone: {
           bsonType: 'string',
-          description: 'Fieldname1 must be a string'
+          description: 'The telephone'
         },
         email: {
           bsonType: 'string',
-          description: 'Fieldname1 must be a string'
+          description: 'The email'
         },
         register_date: {
           bsonType: 'date',
-          description: 'Fieldname1 must be a date'
+          description: 'Register date'
         },
         lastshoppings: {
           bsonType: 'array',
@@ -35,25 +35,33 @@ db.createCollection("client_orders", {
             bsonType: 'object',
             properties: {
               brand: {
-                bsonType: 'string'
+                bsonType: 'string',
+                description:'The brand'
               },
               graduationl: {
-                bsonType: 'decimal'
+                bsonType: 'decimal',
+                description:'Graduation of left lens'
               },
               graduationr: {
-                bsonType: 'decimal'
+                bsonType: 'decimal',
+                description:'Graduation of right lens'
               },
               glasscolorl: {
-                bsonType: 'string'
+                bsonType: 'string',
+                description:'Color of left lens'
               },
               glasscolorr: {
-                bsonType: 'string'
+                bsonType: 'string',
+                description:'Color of right lens'
               },
               frametype: {
-                bsonType: 'string'
+                bsonType: 'string',
+                enum:["plastic","metallic"],
+                description:'Frame type'
               },
               price: {
-                bsonType: 'decimal'
+                bsonType: 'decimal',
+                description:'The price'
               }
             }
           }
@@ -61,7 +69,7 @@ db.createCollection("client_orders", {
       }
     }
   }
-})
+});
 
 db.client_orders.insertOne({
     address: "Right Street,123",
@@ -79,4 +87,68 @@ db.client_orders.insertOne({
     }],
 });
 
+db.createCollection("glasses", {
+  validator:
+  {
+    $jsonSchema: {
+      title: 'Glass',
+      bsonType: 'object',
+      required: [
+        'brand',
+        'frame',
+        'provider',
+        'price'
+      ],
+      properties: {
+        brand: {
+          bsonType: 'string',
+          description: 'The brand'
+        },
+        frame: {
+          bsonType: "string",
+          enum:["plastic","metallic"],
+          description: 'Type of frame'
+        },
+        provider: {
+          bsonType: 'string',
+          description: 'The provider'
+        },
+        price: {
+          bsonType: 'decimal',
+          description: 'The price'
+        },
+        bougthby: {
+          bsonType: 'array',
+          items: {
+            title: 'client',
+            bsonType: 'object',
+            required:[
+            'name'
+            ],
+            properties: {
+              name: {
+                bsonType: 'string'
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+});
 
+db.glasses.insertOne({
+    brand: "Rayban",
+    frame: "metallic",
+    provider: "Googles Associated SL",
+    price:NumberDecimal("105.75"),
+    bougthby:[{
+        name:"Client 1",
+    },
+    {
+        name:"Client 2"
+    },
+    {
+        name:"Client 3"
+    }]
+});
