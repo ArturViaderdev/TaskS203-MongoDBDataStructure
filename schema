@@ -1,0 +1,78 @@
+{
+  $jsonSchema: {
+    title: 'Client',
+    bsonType: 'object',
+    required: [
+      'adress',
+      'telephone',
+      'email',
+      'register_data'
+    ],
+    properties: {
+      adress: {
+        bsonType: 'string',
+        description: 'Fieldname1 must be a string'
+      },
+      telephone: {
+        bsonType: 'string',
+        description: 'Fieldname1 must be a string'
+      },
+      email: {
+        bsonType: 'string',
+        description: 'Fieldname1 must be a string'
+      },
+      register_data: {
+        bsonType: 'date',
+        description: 'Fieldname1 must be a date'
+      },
+      lastshoppings: {
+        bsonType: 'array',
+        items: {
+          title: 'shop',
+          bsonType: 'object',
+          properties: {
+            brand: {
+              bsonType: 'string'
+            },
+            graduation1: {
+              bsonType: 'decimal'
+            },
+            graduationr: {
+              bsonType: 'decimal'
+            },
+            glasscolorl: {
+              bsonType: 'string'
+            },
+            glasscolorr: {
+              bsonType: 'string'
+            },
+            frametype: {
+              bsonType: 'string'
+            },
+            price: {
+              bsonType: 'decimal'
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+inserts
+
+db.client_orders.insertOne({
+    address: "Right Street,123",
+    telephone: "678921235",
+    email: "email@email.com",
+    register_date:new ISODate("2023-09-23"),
+    lastshoppings:[{
+        brand:"Rayban",
+        graduationl:NumberDecimal("1.5"),
+        graduationr:NumberDecimal("1.6"),
+        glasscolorl:"red",
+        glasscolorr:"blue",
+        frametype:"metallic",
+        price: NumberDecimal("100")
+    }],
+});
