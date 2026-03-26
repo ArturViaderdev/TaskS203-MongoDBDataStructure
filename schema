@@ -1,65 +1,67 @@
-{
-  $jsonSchema: {
-    title: 'Client',
-    bsonType: 'object',
-    required: [
-      'adress',
-      'telephone',
-      'email',
-      'register_data'
-    ],
-    properties: {
-      adress: {
-        bsonType: 'string',
-        description: 'Fieldname1 must be a string'
-      },
-      telephone: {
-        bsonType: 'string',
-        description: 'Fieldname1 must be a string'
-      },
-      email: {
-        bsonType: 'string',
-        description: 'Fieldname1 must be a string'
-      },
-      register_data: {
-        bsonType: 'date',
-        description: 'Fieldname1 must be a date'
-      },
-      lastshoppings: {
-        bsonType: 'array',
-        items: {
-          title: 'shop',
-          bsonType: 'object',
-          properties: {
-            brand: {
-              bsonType: 'string'
-            },
-            graduation1: {
-              bsonType: 'decimal'
-            },
-            graduationr: {
-              bsonType: 'decimal'
-            },
-            glasscolorl: {
-              bsonType: 'string'
-            },
-            glasscolorr: {
-              bsonType: 'string'
-            },
-            frametype: {
-              bsonType: 'string'
-            },
-            price: {
-              bsonType: 'decimal'
+use("optics");
+db.createCollection("client_orders", {
+  validator:
+  {
+    $jsonSchema: {
+      title: 'Client',
+      bsonType: 'object',
+      required: [
+        'address',
+        'telephone',
+        'email',
+        'register_date'
+      ],
+      properties: {
+        address: {
+          bsonType: 'string',
+          description: 'Fieldname1 must be a string'
+        },
+        telephone: {
+          bsonType: 'string',
+          description: 'Fieldname1 must be a string'
+        },
+        email: {
+          bsonType: 'string',
+          description: 'Fieldname1 must be a string'
+        },
+        register_date: {
+          bsonType: 'date',
+          description: 'Fieldname1 must be a date'
+        },
+        lastshoppings: {
+          bsonType: 'array',
+          items: {
+            title: 'shop',
+            bsonType: 'object',
+            properties: {
+              brand: {
+                bsonType: 'string'
+              },
+              graduationl: {
+                bsonType: 'decimal'
+              },
+              graduationr: {
+                bsonType: 'decimal'
+              },
+              glasscolorl: {
+                bsonType: 'string'
+              },
+              glasscolorr: {
+                bsonType: 'string'
+              },
+              frametype: {
+                bsonType: 'string'
+              },
+              price: {
+                bsonType: 'decimal'
+              }
             }
           }
         }
       }
     }
   }
-}
-
-inserts
+})
 
 db.client_orders.insertOne({
     address: "Right Street,123",
@@ -76,3 +78,5 @@ db.client_orders.insertOne({
         price: NumberDecimal("100")
     }],
 });
+
+
