@@ -292,6 +292,10 @@ db.createCollection("online_food_orders", {
                       bsonType:'decimal',
                       description:'The price of product'
                     },
+                    quantity:{
+                      bsonType:'int',
+                      description:'Quantity of products'
+                    },
                     pizzacategory:{
                       bsonType:'string',
                       enum:["hawaiana","italiana"],
@@ -434,14 +438,16 @@ db.online_food_orders.insertOne({
         description:"Piña",
         image:"especial.png",
         price:NumberDecimal("12.00"),
-        pizzacategory:"hawaiana"
+        pizzacategory:"hawaiana",
+        quantity:1
       },
       {
         productType:"drink",
         name:"Aquarius",
         description:"Lata 33cl",
         image:"aquarius.png",
-        price:NumberDecimal("2.00")
+        price:NumberDecimal("2.00"),
+        quantity:1
       }
     ]
   },
@@ -459,13 +465,15 @@ db.online_food_orders.insertOne({
         description:"Doble hamburguesa",
         image:"doble.png",
         price:NumberDecimal("12.00"),
+        quantity:1
       },
       {
         productType:"drink",
         name:"Aquarius",
         description:"Lata 33cl",
         image:"aquarius.png",
-        price:NumberDecimal("2.00")
+        price:NumberDecimal("2.00"),
+        quantity:1
       }
     ]
   }
