@@ -152,3 +152,132 @@ db.glasses.insertOne({
         name:"Client 3"
     }]
 });
+
+db.createCollection("online_food_orders", {
+  validator:
+  {
+    $jsonSchema: {
+      title: 'Client',
+      bsonType: 'object',
+      required: [
+        'name',
+        'surnames',
+        'address',
+        'postalcode',
+        'city',
+        'province',
+        'phone'
+      ],
+      properties: {
+        name: {
+          bsonType: 'string',
+          description: 'Client name'
+        },
+        surnames: {
+          bsonType: 'string',
+          description: 'Client surnames'
+        },
+        address: {
+          bsonType: 'string',
+          description: 'Client address'
+        },
+        postalcode:{
+          bsonType: 'string',
+          description: 'Client postal code'
+        },
+        city: {
+          bsonType: 'string',
+          description: 'Client city'
+        },
+        province: {
+          bsonType: 'string',
+          description: 'Client province'
+        },
+        phone: {
+          bsonType: 'string',
+          description: 'Client phone'
+        },
+        orders: {
+          bsonType: 'array',
+          items: {
+            title: 'order',
+            bsonType: 'object',
+            required:[
+            'date',
+            'delivered',
+            'totalpizzas',
+            'totalburgers',
+            'totaldrinks',
+            'totalprice'
+            ],
+            properties: {
+              id: ObjectId(),
+              date:{
+                bsonType: 'date',
+                description: 'Date and time of order'
+              },
+              delivered:{
+                bsonType: 'bool',
+                description: 'Is delivered'
+              },
+              totalpizzas:{
+                bsonType: 'Number',
+                description: 'Total pizzas'
+              },
+              totalburgers:{
+                bsonType:'Number',
+                description: 'Total burgers'
+              },
+              totaldrinks:{
+                bsonType:'Number',
+                description: ' Total drinks'
+              },
+              totalprice:{
+                bsonType:'DecimalNumber',
+                description: ' Total price'
+              },
+              products:{
+                bsonType: 'array',
+                items: {
+                  title: 'order',
+                  bsonType: 'object',
+                  required:[
+                    'productType',
+                    'name',
+                    'description',
+                    'image',
+                    'price'
+                  ],
+                  properties:{
+                    id: ObjectId(),
+                    productType:{
+                      bsonType:'String',
+                      enum:["pizza","burger","drink"],
+                      description:'The product type'
+                    },
+                    name:{
+                      bsonType:'String',
+                      description:'The product name'
+                    },
+                    description:{
+                      bsonType:'String',
+                      description:'The description of product'
+                    },
+                    image:{
+                      bsonType:'String',
+                      description:'Image of the product'
+                    },
+                    price:{
+                      bsonType:'DecimalNumber',
+                      description:'The price of product'
+                    },
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+});
