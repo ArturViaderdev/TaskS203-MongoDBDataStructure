@@ -167,8 +167,10 @@ db.createCollection("online_food_orders", {
         'city',
         'province',
         'phone'
+        'shopID'
       ],
       properties: {
+        shopID:ObjectId("..."),
         name: {
           bsonType: 'string',
           description: 'Client name'
@@ -220,6 +222,11 @@ db.createCollection("online_food_orders", {
                 bsonType: 'bool',
                 description: 'Is delivered'
               },
+              deliveredby: ObjectId("..."),
+              delivereddate:{
+                bsonType: 'date',
+                description: 'Delivered date'
+              }.
               totalpizzas:{
                 bsonType: 'Number',
                 description: 'Total pizzas'
@@ -271,8 +278,85 @@ db.createCollection("online_food_orders", {
                       bsonType:'DecimalNumber',
                       description:'The price of product'
                     },
+                    pizzacategory:{
+                      bsonType:'String',
+                      enum:["hawaiana","italiana"],
+                      description:'The pizza category'
+                    }
                   }
                 }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+});
+
+db.createCollection("shops", {
+  validator:
+  {
+    $jsonSchema: {
+      title: 'shop',
+      bsonType: 'object',
+      required: [
+        'address',
+        'postalcode',
+        'city',
+        'province'
+      ],
+      properties: {
+        _id: ObjectId("...").
+        address:{
+          bsonType: 'string',
+          description: 'Shop Address'
+        },
+        postalcode: {
+          bsonType: "string",
+          description: 'Shop postal code'
+        },
+        city: {
+          bsonType: 'string',
+          description: 'Shop city'
+        },
+        province: {
+          bsonType: 'string',
+          description: 'Shop province'
+        },
+        workers: {
+          bsonType: 'array',
+          items: {
+            title: 'worker',
+            bsonType: 'object',
+            required:[
+            'name',
+            'surnames',
+            'nif',
+            'phone',
+            'deliverathome'
+            ],
+            properties: {
+              _id: ObjectId('...'),
+              name: {
+                bsonType: 'string',
+                description:'worker name'
+              },
+              surnames: {
+                bsonType: 'string',
+                description:'worker surnames'
+              },
+              nif: {
+                bsonType: 'string',
+                description:'worker nif'
+              },
+              phone: {
+                bsonType: 'string',
+                description:'worker phone'
+              },
+              deliverathome: {
+                bsonType: 'bool',
+                description:'worker deliver at home'
               }
             }
           }
