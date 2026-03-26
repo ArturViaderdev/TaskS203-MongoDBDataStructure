@@ -153,6 +153,8 @@ db.glasses.insertOne({
     }]
 });
 
+use("online_food");
+
 db.createCollection("online_food_orders", {
   validator:
   {
@@ -229,7 +231,7 @@ db.createCollection("online_food_orders", {
                 description: 'Is delivered'
               },
               deliveredby:{
-                bsonType: 'objectId',
+                bsonType: ['objectId','null'],
                 description:'person that delivered the order'
               },
               delivereddate:{
@@ -382,4 +384,90 @@ db.createCollection("shops", {
       }
     }
   }
+});
+
+db.shops.insertOne({
+  address: "Calle de la calle 20",
+  postalcode: "09999",
+  city: "Barcelona",
+  province: "Catalunya",
+  workers: [
+    {
+      name:"Jordi",
+      surnames:"Garcia Garcia",
+      nif:"55555555D",
+      phone:"6767676",
+      deliverathome: false
+    },
+    {
+      name:"Pedro",
+      surnames:"Reyes Costa",
+      nif:"44567645E",
+      phone:"4456787",
+      deliverathome: true
+    }
+  ]
+});
+
+db.online_food_orders.insertOne({
+  name:"Juan",
+  surnames:"Garcia Garcia",
+  address:"Calle principal 30",
+  postalcode:"09999",
+  city:"Barcelona",
+  province:"Barcelona",
+  phone:"944484944",
+  shopID: db.shops.findOne({address:"Calle de la calle 20"})._id,
+  orders:[{
+    date: new ISODate("2026-01-01T20:00:00Z"),
+    delivered:true,
+    deliveredby:db.shops.findOne({address:"Calle de la calle 20"}).workers[0]._id,
+    delivereddate: new ISODate("2026-01-01T20:30:00Z"),
+    totalpizzas:1,
+    totalburgers:0,
+    totaldrinks:1,
+    totalprice: NumberDecimal("14.00"),
+    products:[
+      {
+        productType:"pizza",
+        name:"Especial",
+        description:"Piña",
+        image:"especial.png",
+        price:NumberDecimal("12.00"),
+        pizzacategory:"hawaiana"
+      },
+      {
+        productType:"drink",
+        name:"Aquarius",
+        description:"Lata 33cl",
+        image:"aquarius.png",
+        price:NumberDecimal("2.00")
+      }
+    ]
+  },
+  {
+    date: new ISODate("2026-02-01T20:00:00Z"),
+    delivered:false,
+    totalpizzas:0,
+    totalburgers:1,
+    totaldrinks:1,
+    totalprice: NumberDecimal("14.00"),
+    products:[
+      {
+        productType:"burger",
+        name:"Doble cheeseburger",
+        description:"Doble hamburguesa",
+        image:"doble.png",
+        price:NumberDecimal("12.00"),
+      },
+      {
+        productType:"drink",
+        name:"Aquarius",
+        description:"Lata 33cl",
+        image:"aquarius.png",
+        price:NumberDecimal("2.00")
+      }
+    ]
+  }
+  ]
 });
