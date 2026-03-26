@@ -166,11 +166,14 @@ db.createCollection("online_food_orders", {
         'postalcode',
         'city',
         'province',
-        'phone'
+        'phone',
         'shopID'
       ],
       properties: {
-        shopID:ObjectId("..."),
+        shopID:{
+          bsonType: 'objectId',
+          description: 'ID de la tienda'
+        },
         name: {
           bsonType: 'string',
           description: 'Client name'
@@ -213,7 +216,10 @@ db.createCollection("online_food_orders", {
             'totalprice'
             ],
             properties: {
-              id: ObjectId(),
+              id: {
+                bsonType: 'objectId',
+                description: 'Id of order'
+              },
               date:{
                 bsonType: 'date',
                 description: 'Date and time of order'
@@ -222,25 +228,28 @@ db.createCollection("online_food_orders", {
                 bsonType: 'bool',
                 description: 'Is delivered'
               },
-              deliveredby: ObjectId("..."),
+              deliveredby:{
+                bsonType: 'objectId',
+                description:'person that delivered the order'
+              },
               delivereddate:{
                 bsonType: 'date',
                 description: 'Delivered date'
-              }.
+              },
               totalpizzas:{
-                bsonType: 'Number',
+                bsonType: 'int',
                 description: 'Total pizzas'
               },
               totalburgers:{
-                bsonType:'Number',
+                bsonType:'int',
                 description: 'Total burgers'
               },
               totaldrinks:{
-                bsonType:'Number',
+                bsonType:'int',
                 description: ' Total drinks'
               },
               totalprice:{
-                bsonType:'DecimalNumber',
+                bsonType:'decimal',
                 description: ' Total price'
               },
               products:{
@@ -256,30 +265,33 @@ db.createCollection("online_food_orders", {
                     'price'
                   ],
                   properties:{
-                    id: ObjectId(),
+                    id: {
+                      bsonType: 'objectId',
+                      description: 'Product id'
+                    },
                     productType:{
-                      bsonType:'String',
+                      bsonType:'string',
                       enum:["pizza","burger","drink"],
                       description:'The product type'
                     },
                     name:{
-                      bsonType:'String',
+                      bsonType:'string',
                       description:'The product name'
                     },
                     description:{
-                      bsonType:'String',
+                      bsonType:'string',
                       description:'The description of product'
                     },
                     image:{
-                      bsonType:'String',
+                      bsonType:'string',
                       description:'Image of the product'
                     },
                     price:{
-                      bsonType:'DecimalNumber',
+                      bsonType:'decimal',
                       description:'The price of product'
                     },
                     pizzacategory:{
-                      bsonType:'String',
+                      bsonType:'string',
                       enum:["hawaiana","italiana"],
                       description:'The pizza category'
                     }
@@ -307,7 +319,10 @@ db.createCollection("shops", {
         'province'
       ],
       properties: {
-        _id: ObjectId("...").
+        _id: {
+          bsonType: 'objectId',
+          description: 'Shop id'
+        },
         address:{
           bsonType: 'string',
           description: 'Shop Address'
@@ -337,7 +352,10 @@ db.createCollection("shops", {
             'deliverathome'
             ],
             properties: {
-              _id: ObjectId('...'),
+              _id:{
+                bsonType: 'objectId',
+                description: 'Id of worker'
+              },
               name: {
                 bsonType: 'string',
                 description:'worker name'
