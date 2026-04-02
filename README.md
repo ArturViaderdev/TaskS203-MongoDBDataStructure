@@ -62,7 +62,7 @@ And what if the point of view of the interface were the glasses?
 
 # Level 2
 
-### Exercise 1**
+### Exercise 1
 
 You have been hired to design a website that allows users to place food delivery orders online.
 

@@ -480,4 +480,266 @@ db.online_food_orders.insertOne({
   ]
 });
 
+use("youtube");
+
+db.createCollection("users", {
+  validator: {
+    $jsonSchema: {
+      title: 'user',
+      bsonType: 'object',
+      required: [
+        'email',
+        'password',
+        'username',
+        'birthDate',
+        'sex',
+        'country',
+        'postalCode',
+        'createdAt',
+        'subscriptions'
+      ],
+      properties: {
+        _id: {
+          bsonType: "objectId"
+        },
+        email:{
+          bsonType: "string",
+          description: "Email"
+        },
+        password: {
+          bsonType: "string"
+        },
+        username: {
+          bsonType: "string"
+        },
+        birthDate: {
+          bsonType:"date"
+        },
+        sex:{
+          bsonType: "string",
+          enum: ["male","female"]
+        },
+        country: {
+          bsonType: "string"
+        },
+        postalCode: {
+          bsonType: "string"
+        },
+        createdAt: {
+          bsonType: "date"
+        },
+        subscriptions:{
+          bsonType: "array",
+          items: {
+            bsonType: "object",
+            required:['channelId','createdAt'],
+            properties:{
+              channelId:{
+                bsonType: "objectId"
+              },
+              createdAt: {
+                bsonType: "date"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+});
+
+db.createCollection("channels", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      additionalProperties: false,
+      required: [
+        "ownerUserId",
+        "name",
+        "description",
+        "createdAt"
+      ],
+      properties: {
+        _id: {
+          bsonType: "objectId"
+        },
+        ownerUserId: {
+          bsonType: "objectId"
+        },
+        name: {
+          bsonType: "string"
+        },
+        description: {
+          bsonType: "string"
+        },
+        createdAt: {
+          bsonType: "date"
+        }
+      }
+    }
+  }
+});
+
+db.createCollection("videos", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: [
+        "title",
+        "description",
+        "sizeBytes",
+        "fileName",
+        "durationSeconds",
+        "thumbnail",
+        "viewsCount",
+        "likesCount",
+        "dislikesCount",
+        "status",
+        "tags",
+        "publishedByUserId",
+        "channelId",
+        "publishedAt",
+        "comments"
+      ],
+      properties: {
+        _id: {
+          bsonType: "objectId"
+        },
+        title: {
+          bsonType: "string"
+        },
+        description: {
+          bsonType: "string"
+        },
+        sizeBytes: {
+          bsonType: ["int", "long"],
+          minimum: 0
+        },
+        fileName: {
+          bsonType: "string"
+        },
+        durationSeconds: {
+          bsonType: ["int", "long"],
+          minimum: 0
+        },
+        thumbnail: {
+          bsonType: "string"
+        },
+        viewsCount: {
+          bsonType: ["int", "long"],
+          minimum: 0
+        },
+        likesCount: {
+          bsonType: ["int", "long"],
+          minimum: 0
+        },
+        dislikesCount: {
+          bsonType: ["int", "long"],
+          minimum: 0
+        },
+        status: {
+          enum: ["public", "hidden", "private"]
+        },
+        tags: {
+          bsonType: "array",
+          uniqueItems: true,
+          items: {
+            bsonType: "string"
+          }
+        },
+        publishedByUserId: {
+          bsonType: "objectId"
+        },
+        channelId: {
+          bsonType: "objectId"
+        },
+        publishedAt: {
+          bsonType: "date"
+        },
+        comments: {
+          bsonType: "array",
+          items: {
+            bsonType: "object",
+            required: [
+              "userId",
+              "text",
+              "createdAt"
+            ],
+            properties: {
+              _id: {
+                bsonType: "objectId"
+              },
+              userId: {
+                bsonType: "objectId"
+              },
+              text: {
+                bsonType: "string",
+                minLength: 1,
+                maxLength: 5000
+              },
+              createdAt: {
+                bsonType: "date"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+});
+
+db.createCollection("playlists", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: [
+        "ownerUserId",
+        "name",
+        "createdAt",
+        "status",
+        "videoIds"
+      ],
+      properties: {
+        _id: {
+          bsonType: "objectId"
+        },
+        ownerUserId: {
+          bsonType: "objectId"
+        },
+        name: {
+          bsonType: "string",
+          minLength: 1,
+          maxLength: 150
+        },
+        createdAt: {
+          bsonType: "date"
+        },
+        status: {
+          enum: ["public", "private"]
+        },
+        videoIds: {
+          bsonType: "array",
+          uniqueItems: true,
+          items: {
+            bsonType: "objectId"
+          }
+        }
+      }
+    }
+  },
+});
+
+db.users.createIndex({ email: 1 }, { unique: true })
+db.users.createIndex({ username: 1 }, { unique: true })
+
+db.channels.createIndex({ ownerUserId: 1 }, { unique: true })
+
+db.videos.createIndex({ publishedByUserId: 1 })
+db.videos.createIndex({ channelId: 1 })
+db.videos.createIndex({ status: 1, publishedAt: -1 })
+db.videos.createIndex({ tags: 1 })
+
+db.playlists.createIndex({ ownerUserId: 1 })
+db.playlists.createIndex({ status: 1 })
+
 
