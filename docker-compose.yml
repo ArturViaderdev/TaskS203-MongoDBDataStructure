@@ -6,8 +6,7 @@ services:
     - "27017:27017"
     volumes:
     - ./data/db:/data/db
+    - ./schema.js:/docker-entrypoint-initdb.d/01-schema.js:ro
     build:
         context: ./build/mongodb
     network_mode: "host"
-volumes:
-    mysql_data:
