@@ -742,4 +742,254 @@ db.videos.createIndex({ tags: 1 })
 db.playlists.createIndex({ ownerUserId: 1 })
 db.playlists.createIndex({ status: 1 })
 
+const user1 = db.users.insertOne({
+  email: "alex@mail.com",
+  password: "alex1234",
+  username: "alexdev",
+  birthDate: ISODate("1998-06-12T00:00:00Z"),
+                                 sex: "male",
+                                 country: "Spain",
+                                 postalCode: "08921",
+                                 createdAt: ISODate("2026-04-01T09:00:00Z"),
+                                 subscriptions: []
+});
 
+const user2 = db.users.insertOne({
+  email: "maria@mail.com",
+  password: "maria1234",
+  username: "maria_play",
+  birthDate: ISODate("2000-02-18T00:00:00Z"),
+                                 sex: "female",
+                                 country: "Spain",
+                                 postalCode: "08001",
+                                 createdAt: ISODate("2026-04-01T09:30:00Z"),
+                                 subscriptions: []
+});
+
+const user3 = db.users.insertOne({
+  email: "sergi@mail.com",
+  password: "sergi1234",
+  username: "sergi86",
+  birthDate: ISODate("1996-11-03T00:00:00Z"),
+                                 sex: "male",
+                                 country: "Spain",
+                                 postalCode: "17001",
+                                 createdAt: ISODate("2026-04-01T10:00:00Z"),
+                                 subscriptions: []
+});
+
+const user4 = db.users.insertOne({
+  email: "laura@mail.com",
+  password: "laura1234",
+  username: "laurita",
+  birthDate: ISODate("2001-09-27T00:00:00Z"),
+                                 sex: "female",
+                                 country: "Spain",
+                                 postalCode: "46001",
+                                 createdAt: ISODate("2026-04-01T10:30:00Z"),
+                                 subscriptions: []
+});
+
+const channel1 = db.channels.insertOne({
+  ownerUserId: user1.insertedId,
+  name: "Alex Coding Channel",
+  description: "Canal sobre PHP, MongoDB i desenvolupament web.",
+  createdAt: ISODate("2026-04-01T11:00:00Z")
+});
+
+const channel2 = db.channels.insertOne({
+  ownerUserId: user2.insertedId,
+  name: "Maria Plays",
+  description: "Gameplays i directes curts.",
+  createdAt: ISODate("2026-04-01T11:15:00Z")
+});
+
+const channel3 = db.channels.insertOne({
+  ownerUserId: user3.insertedId,
+  name: "Sergi Tech",
+  description: "Tutorials tècnics i reviews.",
+  createdAt: ISODate("2026-04-01T11:30:00Z")
+});
+
+db.users.updateOne(
+  { _id: user1.insertedId },
+  {
+    $set: {
+      subscriptions: [
+        {
+          channelId: channel2.insertedId,
+          createdAt: ISODate("2026-04-01T12:00:00Z")
+        },
+        {
+          channelId: channel3.insertedId,
+          createdAt: ISODate("2026-04-01T12:10:00Z")
+        }
+      ]
+    }
+  }
+);
+
+db.users.updateOne(
+  { _id: user2.insertedId },
+  {
+    $set: {
+      subscriptions: [
+        {
+          channelId: channel1.insertedId,
+          createdAt: ISODate("2026-04-01T12:20:00Z")
+        }
+      ]
+    }
+  }
+);
+
+db.users.updateOne(
+  { _id: user3.insertedId },
+  {
+    $set: {
+      subscriptions: [
+        {
+          channelId: channel1.insertedId,
+          createdAt: ISODate("2026-04-01T12:30:00Z")
+        },
+        {
+          channelId: channel2.insertedId,
+          createdAt: ISODate("2026-04-01T12:40:00Z")
+        }
+      ]
+    }
+  }
+);
+
+const video1 = db.videos.insertOne({
+  title: "Introducció a MongoDB",
+  description: "Vídeo bàsic sobre col·leccions, documents i consultes.",
+  sizeBytes: NumberLong(15430000),
+                                   fileName: "mongodb_intro.mp4",
+                                   durationSeconds: 320,
+                                   thumbnail: "thumb_mongodb_intro.jpg",
+                                   viewsCount: 250,
+                                   likesCount: 18,
+                                   dislikesCount: 2,
+                                   status: "public",
+                                   tags: ["mongodb", "database", "backend"],
+                                   publishedByUserId: user1.insertedId,
+                                   channelId: channel1.insertedId,
+                                   publishedAt: ISODate("2026-04-02T10:20:00Z"),
+                                   comments: [
+                                     {
+                                       userId: user2.insertedId,
+                                       text: "Molt bon vídeo!",
+                                       createdAt: ISODate("2026-04-02T10:30:00Z")
+                                     },
+                                     {
+                                       userId: user3.insertedId,
+                                       text: "M'ha anat bé per repassar.",
+                                       createdAt: ISODate("2026-04-02T10:40:00Z")
+                                     }
+                                   ]
+});
+
+const video2 = db.videos.insertOne({
+  title: "PHP i MongoDB CRUD",
+  description: "Exemple senzill de CRUD amb PHP i MongoDB.",
+  sizeBytes: NumberLong(21200000),
+                                   fileName: "php_mongodb_crud.mp4",
+                                   durationSeconds: 540,
+                                   thumbnail: "thumb_php_crud.jpg",
+                                   viewsCount: 430,
+                                   likesCount: 35,
+                                   dislikesCount: 4,
+                                   status: "public",
+                                   tags: ["php", "mongodb", "crud"],
+                                   publishedByUserId: user1.insertedId,
+                                   channelId: channel1.insertedId,
+                                   publishedAt: ISODate("2026-04-02T11:00:00Z"),
+                                   comments: [
+                                     {
+                                       userId: user4.insertedId,
+                                       text: "Explicació molt clara.",
+                                       createdAt: ISODate("2026-04-02T11:10:00Z")
+                                     }
+                                   ]
+});
+
+const video3 = db.videos.insertOne({
+  title: "Gameplay Retro Racing",
+  description: "Partida ràpida a un joc de cotxes retro.",
+  sizeBytes: NumberLong(30750000),
+                                   fileName: "retro_racing.mp4",
+                                   durationSeconds: 600,
+                                   thumbnail: "thumb_retro_racing.jpg",
+                                   viewsCount: 1200,
+                                   likesCount: 80,
+                                   dislikesCount: 6,
+                                   status: "hidden",
+                                   tags: ["gaming", "retro", "racing"],
+                                   publishedByUserId: user2.insertedId,
+                                   channelId: channel2.insertedId,
+                                   publishedAt: ISODate("2026-04-02T09:00:00Z"),
+                                   comments: [
+                                     {
+                                       userId: user1.insertedId,
+                                       text: "Molt top aquest gameplay.",
+                                       createdAt: ISODate("2026-04-02T09:20:00Z")
+                                     },
+                                     {
+                                       userId: user3.insertedId,
+                                       text: "Quin joc és?",
+                                       createdAt: ISODate("2026-04-02T09:35:00Z")
+                                     }
+                                   ]
+});
+
+const video4 = db.videos.insertOne({
+  title: "Review d'eines per developers",
+  description: "Repàs ràpid d'eines útils per programar.",
+  sizeBytes: NumberLong(18900000),
+                                   fileName: "dev_tools_review.mp4",
+                                   durationSeconds: 410,
+                                   thumbnail: "thumb_dev_tools.jpg",
+                                   viewsCount: 560,
+                                   likesCount: 42,
+                                   dislikesCount: 1,
+                                   status: "private",
+                                   tags: ["tools", "developer", "productivity"],
+                                   publishedByUserId: user3.insertedId,
+                                   channelId: channel3.insertedId,
+                                   publishedAt: ISODate("2026-04-02T08:30:00Z"),
+                                   comments: []
+});
+
+db.playlists.insertMany([
+  {
+    ownerUserId: user2.insertedId,
+    name: "Aprendre MongoDB",
+    createdAt: ISODate("2026-04-02T12:00:00Z"),
+                        status: "public",
+                        videoIds: [
+                          video1.insertedId,
+                          video2.insertedId
+                        ]
+  },
+  {
+    ownerUserId: user1.insertedId,
+    name: "Vídeos preferits",
+    createdAt: ISODate("2026-04-02T12:10:00Z"),
+                        status: "private",
+                        videoIds: [
+                          video3.insertedId,
+                          video4.insertedId
+                        ]
+  },
+  {
+    ownerUserId: user4.insertedId,
+    name: "Tutorials web",
+    createdAt: ISODate("2026-04-02T12:20:00Z"),
+                        status: "public",
+                        videoIds: [
+                          video2.insertedId,
+                          video4.insertedId
+                        ]
+  }
+]);
