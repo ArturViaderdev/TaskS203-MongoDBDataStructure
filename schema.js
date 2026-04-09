@@ -12,6 +12,10 @@ db.createCollection("client_orders", {
         'register_date'
       ],
       properties: {
+        _id: {
+          bsonType: 'objectId',
+          description: 'Shop id'
+        },
         address: {
           bsonType: 'string',
           description: 'The address'
@@ -20,7 +24,7 @@ db.createCollection("client_orders", {
           bsonType: 'string',
           description: 'The telephone'
         },
-        email: {
+        email:{
           bsonType: 'string',
           description: 'The email'
         },
@@ -100,6 +104,10 @@ db.createCollection("glasses", {
         'price'
       ],
       properties: {
+        _id: {
+          bsonType: 'objectId',
+          description: 'Shop id'
+        },
         brand: {
           bsonType: 'string',
           description: 'The brand'
@@ -172,6 +180,10 @@ db.createCollection("online_food_orders", {
         'shopID'
       ],
       properties: {
+        _id: {
+          bsonType: 'objectId',
+          description: 'Shop id'
+        },
         shopID:{
           bsonType: 'objectId',
           description: 'ID de la tienda'
@@ -482,12 +494,12 @@ db.online_food_orders.insertOne({
 
 use("youtube");
 
-db.createCollection("users", {
-  validator: {
-    $jsonSchema: {
-      title: 'user',
-      bsonType: 'object',
-      required: [
+db.createCollection("users",{
+  validator:{
+    $jsonSchema:{
+      title:'user',
+      bsonType:'object',
+      required:[
         'email',
         'password',
         'username',
@@ -499,46 +511,46 @@ db.createCollection("users", {
         'subscriptions'
       ],
       properties: {
-        _id: {
+        _id:{
           bsonType: "objectId"
         },
         email:{
           bsonType: "string",
           description: "Email"
         },
-        password: {
+        password:{
           bsonType: "string"
         },
-        username: {
-          bsonType: "string"
+        username:{
+          bsonType:"string"
         },
         birthDate: {
           bsonType:"date"
         },
         sex:{
           bsonType: "string",
-          enum: ["male","female"]
+          enum:["male","female"]
         },
         country: {
-          bsonType: "string"
+          bsonType:"string"
         },
         postalCode: {
-          bsonType: "string"
+          bsonType:"string"
         },
         createdAt: {
-          bsonType: "date"
+          bsonType:"date"
         },
         subscriptions:{
-          bsonType: "array",
-          items: {
-            bsonType: "object",
+          bsonType:"array",
+          items:{
+            bsonType:"object",
             required:['channelId','createdAt'],
             properties:{
               channelId:{
-                bsonType: "objectId"
+                bsonType:"objectId"
               },
-              createdAt: {
-                bsonType: "date"
+              createdAt:{
+                bsonType:"date"
               }
             }
           }
@@ -549,42 +561,42 @@ db.createCollection("users", {
 });
 
 db.createCollection("channels", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
+  validator:{
+    $jsonSchema:{
+      bsonType:"object",
       additionalProperties: false,
-      required: [
+      required:[
         "ownerUserId",
         "name",
         "description",
         "createdAt"
       ],
-      properties: {
-        _id: {
-          bsonType: "objectId"
+      properties:{
+        _id:{
+          bsonType:"objectId"
         },
-        ownerUserId: {
-          bsonType: "objectId"
+        ownerUserId:{
+          bsonType:"objectId"
         },
-        name: {
-          bsonType: "string"
+        name:{
+          bsonType:"string"
         },
-        description: {
-          bsonType: "string"
+        description:{
+          bsonType:"string"
         },
-        createdAt: {
-          bsonType: "date"
+        createdAt:{
+          bsonType:"date"
         }
       }
     }
   }
 });
 
-db.createCollection("videos", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: [
+db.createCollection("videos",{
+  validator:{
+    $jsonSchema:{
+      bsonType:"object",
+      required:[
         "title",
         "description",
         "sizeBytes",
@@ -601,84 +613,84 @@ db.createCollection("videos", {
         "publishedAt",
         "comments"
       ],
-      properties: {
-        _id: {
-          bsonType: "objectId"
+      properties:{
+        _id:{
+          bsonType:"objectId"
         },
-        title: {
-          bsonType: "string"
+        title:{
+          bsonType:"string"
         },
-        description: {
-          bsonType: "string"
+        description:{
+          bsonType:"string"
         },
-        sizeBytes: {
-          bsonType: ["int", "long"],
+        sizeBytes:{
+          bsonType:["int","long"],
+          minimum:0
+        },
+        fileName:{
+          bsonType:"string"
+        },
+        durationSeconds:{
+          bsonType: ["int","long"],
           minimum: 0
         },
-        fileName: {
-          bsonType: "string"
+        thumbnail:{
+          bsonType:"string"
         },
-        durationSeconds: {
-          bsonType: ["int", "long"],
-          minimum: 0
+        viewsCount:{
+          bsonType: ["int","long"],
+          minimum:0
         },
-        thumbnail: {
-          bsonType: "string"
+        likesCount:{
+          bsonType: ["int","long"],
+          minimum:0
         },
-        viewsCount: {
-          bsonType: ["int", "long"],
-          minimum: 0
+        dislikesCount:{
+          bsonType: ["int","long"],
+          minimum:0
         },
-        likesCount: {
-          bsonType: ["int", "long"],
-          minimum: 0
+        status:{
+          enum: ["public","hidden","private"]
         },
-        dislikesCount: {
-          bsonType: ["int", "long"],
-          minimum: 0
-        },
-        status: {
-          enum: ["public", "hidden", "private"]
-        },
-        tags: {
-          bsonType: "array",
-          uniqueItems: true,
-          items: {
-            bsonType: "string"
+        tags:{
+          bsonType:"array",
+          uniqueItems:true,
+          items:{
+            bsonType:"string"
           }
         },
-        publishedByUserId: {
-          bsonType: "objectId"
+        publishedByUserId:{
+          bsonType:"objectId"
         },
-        channelId: {
-          bsonType: "objectId"
+        channelId:{
+          bsonType:"objectId"
         },
-        publishedAt: {
-          bsonType: "date"
+        publishedAt:{
+          bsonType:"date"
         },
-        comments: {
-          bsonType: "array",
-          items: {
-            bsonType: "object",
-            required: [
+        comments:{
+          bsonType:"array",
+          items:{
+            bsonType:"object",
+            required:[
               "userId",
               "text",
               "createdAt"
             ],
-            properties: {
-              _id: {
-                bsonType: "objectId"
+            properties:{
+              _id:{
+                bsonType:"objectId"
               },
-              userId: {
-                bsonType: "objectId"
+              userId:{
+                bsonType:"objectId"
               },
-              text: {
-                bsonType: "string",
-                minLength: 1,
-                maxLength: 5000
+              text:{
+                bsonType:"string",
+                minLength:1,
+                maxLength:5000
               },
-              createdAt: {
-                bsonType: "date"
+              createdAt:{
+                bsonType:"date"
               }
             }
           }
@@ -688,40 +700,40 @@ db.createCollection("videos", {
   },
 });
 
-db.createCollection("playlists", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: [
+db.createCollection("playlists",{
+  validator:{
+    $jsonSchema:{
+      bsonType:"object",
+      required:[
         "ownerUserId",
         "name",
         "createdAt",
         "status",
         "videoIds"
       ],
-      properties: {
-        _id: {
-          bsonType: "objectId"
+      properties:{
+        _id:{
+          bsonType:"objectId"
         },
-        ownerUserId: {
-          bsonType: "objectId"
+        ownerUserId:{
+          bsonType:"objectId"
         },
-        name: {
-          bsonType: "string",
-          minLength: 1,
-          maxLength: 150
+        name:{
+          bsonType:"string",
+          minLength:1,
+          maxLength:150
         },
-        createdAt: {
-          bsonType: "date"
+        createdAt:{
+          bsonType:"date"
         },
-        status: {
-          enum: ["public", "private"]
+        status:{
+          enum:["public","private"]
         },
-        videoIds: {
-          bsonType: "array",
-          uniqueItems: true,
-          items: {
-            bsonType: "objectId"
+        videoIds:{
+          bsonType:"array",
+          uniqueItems:true,
+          items:{
+            bsonType:"objectId"
           }
         }
       }
@@ -862,132 +874,132 @@ db.users.updateOne(
 );
 
 const video1 = db.videos.insertOne({
-  title: "Introducció a MongoDB",
-  description: "Vídeo bàsic sobre col·leccions, documents i consultes.",
-  sizeBytes: NumberLong(15430000),
-                                   fileName: "mongodb_intro.mp4",
-                                   durationSeconds: 320,
-                                   thumbnail: "thumb_mongodb_intro.jpg",
-                                   viewsCount: 250,
-                                   likesCount: 18,
-                                   dislikesCount: 2,
-                                   status: "public",
-                                   tags: ["mongodb", "database", "backend"],
+  title:"Introducció a MongoDB",
+  description:"Vídeo bàsic sobre col·leccions, documents i consultes.",
+  sizeBytes:NumberLong(15430000),
+                                   fileName:"mongodb_intro.mp4",
+                                   durationSeconds:320,
+                                   thumbnail:"thumb_mongodb_intro.jpg",
+                                   viewsCount:250,
+                                   likesCount:18,
+                                   dislikesCount:2,
+                                   status:"public",
+                                   tags:["mongodb", "database", "backend"],
                                    publishedByUserId: user1.insertedId,
-                                   channelId: channel1.insertedId,
-                                   publishedAt: ISODate("2026-04-02T10:20:00Z"),
-                                   comments: [
+                                   channelId:channel1.insertedId,
+                                   publishedAt:ISODate("2026-04-02T10:20:00Z"),
+                                   comments:[
                                      {
-                                       userId: user2.insertedId,
-                                       text: "Molt bon vídeo!",
-                                       createdAt: ISODate("2026-04-02T10:30:00Z")
+                                       userId:user2.insertedId,
+                                       text:"Molt bon vídeo!",
+                                       createdAt:ISODate("2026-04-02T10:30:00Z")
                                      },
                                      {
-                                       userId: user3.insertedId,
-                                       text: "M'ha anat bé per repassar.",
-                                       createdAt: ISODate("2026-04-02T10:40:00Z")
+                                       userId:user3.insertedId,
+                                       text:"M'ha anat bé per repassar.",
+                                       createdAt:ISODate("2026-04-02T10:40:00Z")
                                      }
                                    ]
 });
 
 const video2 = db.videos.insertOne({
-  title: "PHP i MongoDB CRUD",
-  description: "Exemple senzill de CRUD amb PHP i MongoDB.",
-  sizeBytes: NumberLong(21200000),
-                                   fileName: "php_mongodb_crud.mp4",
-                                   durationSeconds: 540,
-                                   thumbnail: "thumb_php_crud.jpg",
-                                   viewsCount: 430,
-                                   likesCount: 35,
-                                   dislikesCount: 4,
-                                   status: "public",
-                                   tags: ["php", "mongodb", "crud"],
-                                   publishedByUserId: user1.insertedId,
-                                   channelId: channel1.insertedId,
-                                   publishedAt: ISODate("2026-04-02T11:00:00Z"),
-                                   comments: [
+  title:"PHP i MongoDB CRUD",
+  description:"Exemple senzill de CRUD amb PHP i MongoDB.",
+  sizeBytes:NumberLong(21200000),
+                                   fileName:"php_mongodb_crud.mp4",
+                                   durationSeconds:540,
+                                   thumbnail:"thumb_php_crud.jpg",
+                                   viewsCount:430,
+                                   likesCount:35,
+                                   dislikesCount:4,
+                                   status:"public",
+                                   tags:["php","mongodb","crud"],
+                                   publishedByUserId:user1.insertedId,
+                                   channelId:channel1.insertedId,
+                                   publishedAt:ISODate("2026-04-02T11:00:00Z"),
+                                   comments:[
                                      {
-                                       userId: user4.insertedId,
-                                       text: "Explicació molt clara.",
-                                       createdAt: ISODate("2026-04-02T11:10:00Z")
+                                       userId:user4.insertedId,
+                                       text:"Explicació molt clara.",
+                                       createdAt:ISODate("2026-04-02T11:10:00Z")
                                      }
                                    ]
 });
 
 const video3 = db.videos.insertOne({
-  title: "Gameplay Retro Racing",
-  description: "Partida ràpida a un joc de cotxes retro.",
-  sizeBytes: NumberLong(30750000),
-                                   fileName: "retro_racing.mp4",
-                                   durationSeconds: 600,
-                                   thumbnail: "thumb_retro_racing.jpg",
-                                   viewsCount: 1200,
-                                   likesCount: 80,
-                                   dislikesCount: 6,
-                                   status: "hidden",
-                                   tags: ["gaming", "retro", "racing"],
-                                   publishedByUserId: user2.insertedId,
-                                   channelId: channel2.insertedId,
-                                   publishedAt: ISODate("2026-04-02T09:00:00Z"),
-                                   comments: [
+  title:"Gameplay Retro Racing",
+  description:"Partida ràpida a un joc de cotxes retro.",
+  sizeBytes:NumberLong(30750000),
+                                   fileName:"retro_racing.mp4",
+                                   durationSeconds:600,
+                                   thumbnail:"thumb_retro_racing.jpg",
+                                   viewsCount:1200,
+                                   likesCount:80,
+                                   dislikesCount:6,
+                                   status:"hidden",
+                                   tags:["gaming", "retro", "racing"],
+                                   publishedByUserId:user2.insertedId,
+                                   channelId:channel2.insertedId,
+                                   publishedAt:ISODate("2026-04-02T09:00:00Z"),
+                                   comments:[
                                      {
-                                       userId: user1.insertedId,
-                                       text: "Molt top aquest gameplay.",
-                                       createdAt: ISODate("2026-04-02T09:20:00Z")
+                                       userId:user1.insertedId,
+                                       text:"Molt top aquest gameplay.",
+                                       createdAt:ISODate("2026-04-02T09:20:00Z")
                                      },
                                      {
-                                       userId: user3.insertedId,
-                                       text: "Quin joc és?",
-                                       createdAt: ISODate("2026-04-02T09:35:00Z")
+                                       userId:user3.insertedId,
+                                       text:"Quin joc és?",
+                                       createdAt:ISODate("2026-04-02T09:35:00Z")
                                      }
                                    ]
 });
 
 const video4 = db.videos.insertOne({
-  title: "Review d'eines per developers",
-  description: "Repàs ràpid d'eines útils per programar.",
-  sizeBytes: NumberLong(18900000),
-                                   fileName: "dev_tools_review.mp4",
-                                   durationSeconds: 410,
-                                   thumbnail: "thumb_dev_tools.jpg",
-                                   viewsCount: 560,
-                                   likesCount: 42,
-                                   dislikesCount: 1,
-                                   status: "private",
-                                   tags: ["tools", "developer", "productivity"],
-                                   publishedByUserId: user3.insertedId,
-                                   channelId: channel3.insertedId,
-                                   publishedAt: ISODate("2026-04-02T08:30:00Z"),
-                                   comments: []
+  title:"Review d'eines per developers",
+  description:"Repàs ràpid d'eines útils per programar.",
+  sizeBytes:NumberLong(18900000),
+                                   fileName:"dev_tools_review.mp4",
+                                   durationSeconds:410,
+                                   thumbnail:"thumb_dev_tools.jpg",
+                                   viewsCount:560,
+                                   likesCount:42,
+                                   dislikesCount:1,
+                                   status:"private",
+                                   tags:["tools", "developer", "productivity"],
+                                   publishedByUserId:user3.insertedId,
+                                   channelId:channel3.insertedId,
+                                   publishedAt:ISODate("2026-04-02T08:30:00Z"),
+                                   comments:[]
 });
 
 db.playlists.insertMany([
   {
-    ownerUserId: user2.insertedId,
-    name: "Aprendre MongoDB",
-    createdAt: ISODate("2026-04-02T12:00:00Z"),
-                        status: "public",
-                        videoIds: [
+    ownerUserId:user2.insertedId,
+    name:"Aprendre MongoDB",
+    createdAt:ISODate("2026-04-02T12:00:00Z"),
+                        status:"public",
+                        videoIds:[
                           video1.insertedId,
                           video2.insertedId
                         ]
   },
   {
-    ownerUserId: user1.insertedId,
+    ownerUserId:user1.insertedId,
     name: "Vídeos preferits",
-    createdAt: ISODate("2026-04-02T12:10:00Z"),
-                        status: "private",
-                        videoIds: [
+    createdAt:ISODate("2026-04-02T12:10:00Z"),
+                        status:"private",
+                        videoIds:[
                           video3.insertedId,
                           video4.insertedId
                         ]
   },
   {
-    ownerUserId: user4.insertedId,
-    name: "Tutorials web",
-    createdAt: ISODate("2026-04-02T12:20:00Z"),
-                        status: "public",
-                        videoIds: [
+    ownerUserId:user4.insertedId,
+    name:"Tutorials web",
+    createdAt:ISODate("2026-04-02T12:20:00Z"),
+                        status:"public",
+                        videoIds:[
                           video2.insertedId,
                           video4.insertedId
                         ]

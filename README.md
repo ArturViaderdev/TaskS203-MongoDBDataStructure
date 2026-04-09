@@ -1,5 +1,21 @@
 # TaskS203-MongoDBDataStructure
 
+## 🚀 Instal.lation and execution
+
+1. Clone the repository:
+
+````bash
+https://github.com/ArturViaderdev/TaskS203-MongoDBDataStructure.git
+````
+
+2. Execute with docker compose:
+
+````
+docker compose up
+````
+
+You need docker compose installed on the operating system.
+
 # Level 1
 
 ## Optics
